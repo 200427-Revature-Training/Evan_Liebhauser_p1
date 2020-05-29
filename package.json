@@ -1,0 +1,22 @@
+{
+  "name": "p1",
+  "version": "1.0.0",
+  "description": "revature project_1: employee reimbursement system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/200427-Revature-Training/Evan_Liebhauser_p1.git"
+  },
+  "author": "Evan Liebhauser",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/200427-Revature-Training/Evan_Liebhauser_p1/issues"
+  },
+  "homepage": "https://github.com/200427-Revature-Training/Evan_Liebhauser_p1#readme",
+  "dependencies": {
+    "@types/pg": "^7.14.3"
+  }
+}
