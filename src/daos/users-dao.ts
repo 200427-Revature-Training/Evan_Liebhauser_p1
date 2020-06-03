@@ -1,6 +1,7 @@
 import { db } from '../daos/db';
 import { User, UserRow } from '../models/User';
 import { Reimb } from '../models/Reimbursement';
+import { reimbExists } from '../daos/reimbursements-dao'
 /**
  * If we are using a one-off query for, we can just use db.query - it will have a connection
  * issue the query without having to pull it from the pool.
@@ -94,6 +95,24 @@ WHERE id = $7 RETURNING *`;
     return db.query<UserRow>(sql, [])
         .then(result => result.rows.map(row => User.from(row))[0]);
 }
+
+export async function getUsersByReimbId(reimbId: number): Promise<User[]> {
+    const userExists: boolean = await reimbExists(reimbId);
+    if (!userExists) {
+        return undefined;
+    }
+
+    const sql = `SELECT users.* FROM user_owners \
+LEFT JOIN users ON user_owners.users_id = users.id \
+WHERE reimbs_id = $1`;
+
+    // await will pause execution, waiting for the promise to resolve, then evaluate to 
+    // value the promise resolves to
+    const result = await db.query<User>(sql, [reimbId]);
+    return result.rows;
+
+}
+
 
 interface Exists {
     exists: boolean;

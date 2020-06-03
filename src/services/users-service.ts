@@ -12,8 +12,8 @@ export function getUserById(id: number): Promise<User> {
     return usersDao.getUserById(id);
 }
 
-export function getReimbsByUserId(id: number): Promise<Reimb[]> {
-    return usersDao.getReimbsByUserId(id);
+export function getUsersByReimbId(id: number): Promise<User[]> {
+    return usersDao.getUsersByReimbId(id);
 }
 
 export function saveUser(user: any): Promise<User> {

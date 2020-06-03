@@ -12,9 +12,11 @@ export function getReimbById(id: number): Promise<Reimb> {
     return reimbsDao.getReimbById(id);
 }
 
-export function getUsersByReimbId(id: number): Promise<User[]> {
-    return reimbsDao.getUsersByReimbId(id);
+
+export function getReimbsByUserId(id: number): Promise<Reimb[]> {
+    return reimbsDao.getReimbsByUserId(id);
 }
+
 
 export function saveReimb(reimb: any): Promise<Reimb> {
 

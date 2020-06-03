@@ -5,8 +5,8 @@ import { User } from '../models/User';
 export const reimbsRouter = express.Router();
 
 /*
-    http://localhost:3000/people
-    Retrieves an array of people from database
+    http://localhost:3000/reimbursements
+    Retrieves an array of reimbursements from database
 */
 reimbsRouter.get('', (request, response, next) => {
     reimbsService.getAllReimbs().then(reimbs => {
@@ -19,9 +19,9 @@ reimbsRouter.get('', (request, response, next) => {
 });
 
 /*
-    http://localhost:3000/people/1
-    Retrieves a single person from the database by id
-    If the person does not exist, sends 404
+    http://localhost:3000/reimbursements/1
+    Retrieves a single reimbursement from the database by id
+    If the reimbursement does not exist, sends 404
 */
 reimbsRouter.get('/:id', (request, response, next) => {
     const id = +request.params.id;
@@ -38,9 +38,25 @@ reimbsRouter.get('/:id', (request, response, next) => {
     })
 });
 
+
+reimbsRouter.get('/user/:id', (request, response, next) => {
+    const id = +request.params.id;
+    reimbsService.getReimbsByUserId(id).then(reimb => {
+        if (!reimb[0]) {
+            response.sendStatus(404);
+        } else {
+            response.json(reimb);
+        }
+        next();
+    }).catch(err => {
+        response.sendStatus(500);
+        next();
+    })
+});
+
 /*
-    POST http://localhost:3000/people
-    Creates a new person and saves them to the database.
+    POST http://localhost:3000/reimbursements
+    Creates a new reimbursement and saves them to the database.
     Returns the inserted data as JSON with status 201.
 */
 
