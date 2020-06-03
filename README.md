@@ -7,6 +7,7 @@ POST /users = saves new user;
 PATCH /users/:ers_users_id = edits user with specified id;
 GET /users = returns all users;
 *GET /users/:ers_users_id = returns user with specified id;
+*GET/users/:ers_username = returns user with specified username;
 
 Reimbursements:
 *POST /reimbursements = saves new reimbursement;
