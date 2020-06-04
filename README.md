@@ -2,6 +2,12 @@ Evan Liebhauser Revature Project 1
 
 API Design
 
+
+Authorization:
+GET /auth = login
+DELETE /auth = logout
+
+
 Users:
 POST /users = saves new user;
 PATCH /users/:ers_users_id = edits user with specified id;
