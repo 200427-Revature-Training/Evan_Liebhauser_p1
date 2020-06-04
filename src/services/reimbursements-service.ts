@@ -50,7 +50,7 @@ export function patchReimb(input: any): Promise<Reimb> {
        
     );
 
-    if (!reimb.id) {
+    if (!reimb.REIMB_ID) {
         throw new Error('400');
     }
 

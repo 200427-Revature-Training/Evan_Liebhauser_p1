@@ -1,11 +1,11 @@
 export class User{
-    id: number;
-    username: string;
-    password: string; /* DON'T store password as plaintext in final release */
-    firstName: string;
-    lastName: string;
-    email: string;
-    roleID: number;
+    ERS_USERS_ID: number;
+    ERS_USERNAME: string;
+    ERS_PASSWORD: string; /* DON'T store password as plaintext in final release */
+    USER_FIRST_NAME: string;
+    USER_LAST_NAME: string;
+    USER_EMAIL: string;
+    USER_ROLE_ID: number;
 
     static from(obj: UserRow): User {
         const user = new User(
@@ -14,14 +14,14 @@ export class User{
         return user;
     }
 
-    constructor(id: number, username: string, password: string, firstName: string, lastName: string, email: string, roleID: number) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.roleID = roleID;
+    constructor(ERS_USERS_ID: number, ERS_USERNAME: string, ERS_PASSWORD: string, USER_FIRST_NAME: string, USER_LAST_NAME: string, USER_EMAIL: string, USER_ROLE_ID: number) {
+        this.ERS_USERS_ID = ERS_USERS_ID;
+        this.ERS_USERNAME = ERS_USERNAME;
+        this.ERS_PASSWORD = ERS_PASSWORD;
+        this.USER_FIRST_NAME = USER_FIRST_NAME;
+        this.USER_LAST_NAME = USER_LAST_NAME;
+        this.USER_EMAIL = USER_EMAIL;
+        this.USER_ROLE_ID = USER_ROLE_ID;
     }
 }
 

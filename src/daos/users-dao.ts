@@ -9,22 +9,20 @@ import { reimbExists } from '../daos/reimbursements-dao'
  * query(sql, [params, ...]);
  */
 
-export function getAllUsers(): Promise<User[]> {
-    const sql = 'SELECT * FROM users';
+export async function getAllUsers(): Promise<User[]> {
+    const sql = 'SELECT * FROM p1.ERS_USERS';
 
     // 1. Query database using sql statement above
     // 2. Query will return a promise typed as QueryResult<UserRow>
     // 3. We can react to the database response by chaining a .then onto the query
-    return db.query<UserRow>(sql, []).then(result => {
-        // 4. Extract rows from the query response
-        const rows: UserRow[] = result.rows;
-
-        console.log(rows);
-
-        // 5. Convert row data format to User objects
-        const users: User[] = rows.map(row => User.from(row));
-        return users;
-    });
+    const result = await db.query<UserRow>(sql, []);
+    // 4. Extract rows from the query response
+    const rows: UserRow[] = result.rows;
+    console.log(rows);
+    return rows;
+    // 5. Convert row data format to User objects
+    // const users: User[] = rows.map(row => User.from(row));
+    // return users;
 }
 
 export function getUserById(id: number): Promise<User> {
@@ -33,7 +31,7 @@ export function getUserById(id: number): Promise<User> {
 
     // Use parameterized queries to avoid SQL Injection
     // $1 -> Parameter 1 placeholder
-    const sql = 'SELECT * FROM users WHERE id = $1';
+    const sql = 'SELECT * FROM p1.ERS_USERS WHERE id = $1';
 
     return db.query<UserRow>(sql, [id])
         .then(result => result.rows.map(row => User.from(row))[0]);
@@ -50,9 +48,9 @@ export async function getReimbsByUserId(userId: number): Promise<Reimb[]> {
         return undefined;
     }
 
-    const sql = `SELECT reimbs.* FROM reimb_owners \
-LEFT JOIN reimbs ON reimb_owners.reimbs_id = reimbs.id \
-WHERE users_id = $1`;
+    const sql = `SELECT * FROM p1.ERS_USERS \
+LEFT JOIN p1.ERS_REIMBURSEMENT ON p1.ERS_USERS.ERS_USERS_ID = p1.ERS_REIMBURSEMENT.REIMB_AUTHOR \
+WHERE p1.ERS_USERS.ERS_USERS_ID = $1`;
 
     // await will pause execution, waiting for the promise to resolve, then evaluate to 
     // value the promise resolves to
@@ -75,12 +73,12 @@ export function saveUser(user: User): Promise<User> {
 VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
 
     return db.query<UserRow>(sql, [
-        user.username,
-        user.password,
-        user.firstName,
-        user.lastName,
-        user.email,
-        user.roleID
+        user.ERS_USERNAME,
+        user.ERS_PASSWORD,
+        user.USER_FIRST_NAME,
+        user.USER_LAST_NAME,
+        user.USER_EMAIL,
+        user.USER_ROLE_ID
     ]).then(result => result.rows.map(row => User.from(row))[0]);
 }
 
@@ -88,9 +86,9 @@ export function patchUser(user: User): Promise<User> {
     // coalesce(null, 'hello') --> 'hello'
     // coalesce('hello', 'goodbye') --> 'hello'
 
-    const sql = `UPDATE users SET ERS_USERNAME = COALESCE($1, ERS_USERNAME), ERS_PASSWORD = COALESCE($2, ERS_PASSWORD), USER_FIRST_NAME = COALESCE($3, USER_FIRST_NAME), \
+    const sql = `UPDATE p1.ERS_USERS SET ERS_USERNAME = COALESCE($1, ERS_USERNAME), ERS_PASSWORD = COALESCE($2, ERS_PASSWORD), USER_FIRST_NAME = COALESCE($3, USER_FIRST_NAME), \
     USER_LAST_NAME = COALESCE($4, USER_LAST_NAME), USER_EMAIL = COALESCE($5, USER_EMAIL), USER_ROLE_ID = COALESCE($6, USER_ROLE_ID) \
-WHERE id = $7 RETURNING *`;
+WHERE ERS_USERS_ID = $7 RETURNING *`;
 
     return db.query<UserRow>(sql, [])
         .then(result => result.rows.map(row => User.from(row))[0]);
@@ -102,9 +100,9 @@ export async function getUsersByReimbId(reimbId: number): Promise<User[]> {
         return undefined;
     }
 
-    const sql = `SELECT users.* FROM user_owners \
-LEFT JOIN users ON user_owners.users_id = users.id \
-WHERE reimbs_id = $1`;
+    const sql = `SELECT * FROM p1.ERS_REIMBURSEMENT \
+LEFT JOIN p1.ERS_USERS ON REIMB_AUTHOR = ERS_USERS_ID \
+WHERE REIMB_ID = $1`;
 
     // await will pause execution, waiting for the promise to resolve, then evaluate to 
     // value the promise resolves to

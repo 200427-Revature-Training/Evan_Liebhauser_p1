@@ -1,14 +1,14 @@
 export class Reimb {
-    id: number;
-    amount: number;
-    timeSubmitted: Date;
-    timeResolved: Date;
-    description: string;
-    receipt: Blob; //type likely to be changed by final release
-    author: number;
-    resolver: number;
-    reimbStatus: number;
-    reimbType: number;
+    REIMB_ID: number;
+    REIMB_AMOUNT: number;
+    REIMB_SUBMITTED: Date;
+    REIMB_RESOLVED: Date;
+    REIMB_DESCRIPTION: string;
+    REIMB_RECEIPT: Blob; //type likely to be changed by final release
+    REIMB_AUTHOR: number;
+    REIMB_RESOLVER: number;
+    REIMB_STATUS_ID: number;
+    REIMB_TYPE_ID: number;
 
     static from(obj: ReimbRow): Reimb {
         const reimb = new Reimb(
@@ -17,18 +17,18 @@ export class Reimb {
         return reimb
     }
 
-    /*blob type of receipt likely to be changed by final release*/
-    constructor(id: number, amount: number, timeSubmitted: Date, timeResolved: Date, description: string, receipt: Blob, author: number, resolver: number, reimbStatus: number, reimbType: number) {
-        this.id = id;
-        this.amount = amount;
-        this.timeSubmitted = timeSubmitted;
-        this.timeResolved = timeResolved;
-        this.description = description;
-        this.receipt = receipt;
-        this.author = author;
-        this.resolver = resolver;
-        this.reimbStatus = reimbStatus;
-        this.reimbType = reimbType;
+    /*blob type of REIMB_RECEIPT likely to be changed by final release*/
+    constructor(REIMB_ID: number, REIMB_AMOUNT: number, REIMB_SUBMITTED: Date, REIMB_RESOLVED: Date, REIMB_DESCRIPTION: string, REIMB_RECEIPT: Blob, REIMB_AUTHOR: number, REIMB_RESOLVER: number, REIMB_STATUS_ID: number, REIMB_TYPE_ID: number) {
+        this.REIMB_ID = REIMB_ID;
+        this.REIMB_AMOUNT = REIMB_AMOUNT;
+        this.REIMB_SUBMITTED = REIMB_SUBMITTED;
+        this.REIMB_RESOLVED = REIMB_RESOLVED;
+        this.REIMB_DESCRIPTION = REIMB_DESCRIPTION;
+        this.REIMB_RECEIPT = REIMB_RECEIPT;
+        this.REIMB_AUTHOR = REIMB_AUTHOR;
+        this.REIMB_RESOLVER = REIMB_RESOLVER;
+        this.REIMB_STATUS_ID = REIMB_STATUS_ID;
+        this.REIMB_TYPE_ID = REIMB_TYPE_ID;
     }
 }
 

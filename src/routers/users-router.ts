@@ -14,6 +14,7 @@ usersRouter.get('', (request, response, next) => {
         response.json(users);
         next();
     }).catch(err => {
+        console.log(err);
         response.sendStatus(500);
     });
 });
@@ -42,27 +43,7 @@ usersRouter.get('/:id', (request, response, next) => {
 * GET /users/{id}/reimbs - Array of reimbs owned by that user
 * or 404 if the user does not exist
 */
-usersRouter.get('/:id/reimbs', async (request, response, next) => {
-    const id: number = parseInt(request.params.id);
 
-    let reimbs: Reimb[];
-
-    try {
-        reimbs = await usersService.getReimbsByUserId(id);
-    } catch (err) {
-        response.sendStatus(500);
-        console.log(err);
-        return;
-    }
-
-    // Dao returns undefined for non-existent user
-    if (!reimbs) {
-        response.sendStatus(404);
-    } else {
-        response.json(reimbs);
-    }
-    next();
-});
 
 /*
     POST http://localhost:3000/users

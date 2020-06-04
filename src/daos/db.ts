@@ -21,5 +21,5 @@ export const db = new Pool({
 });
 
 db.on('connect', (client) => {
-    client.query(`SET search_path TO my_schema, public`);
+    client.query(`SET search_path TO my_schema, p1`);
 });

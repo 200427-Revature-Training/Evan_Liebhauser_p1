@@ -20,13 +20,13 @@ export function saveUser(user: any): Promise<User> {
 
     // Data from the user cannot be trusted
     const newUser = new User(
-        undefined, user.username, user.password, user.firstName, user.lastName, user.email, user.roleID
+        undefined, user.ERS_USERS_ID, user.ERS_PASSWORD, user.USER_FIRST_NAME, user.USER_LAST_NAME, user.USER_EMAIL, user.USER_ROLE_ID
     );
 
     // IF we're going validate it here, we probably want
     // constraints on the db too
 
-    if(user.username && user.password && user.firstName && user.lastName && user.email && user.roleID) {
+    if(user.ERS_USERS_ID && user.ERS_PASSWORD && user.USER_FIRST_NAME && user.USER_LAST_NAME && user.USER_EMAIL && user.USER_ROLE_ID) {
         // Data is valid - Continue submitting to DAO
         return usersDao.saveUser(newUser);
     } else {
@@ -39,10 +39,10 @@ export function saveUser(user: any): Promise<User> {
 export function patchUser(input: any): Promise<User> {
 
     const user = new User(
-        input.id, input.username, input.password, input.firstName, input.lastName, input.email, input.roleID
+        input.ERS_USERS_ID, input.ERS_USERNAME, input.ERS_PASSWORD, input.USER_FIRST_NAME, input.USER_LAST_NAME, input.USER_EMAIL, input.USER_ROLE_ID
     );
 
-    if (!user.id) {
+    if (!user.ERS_USERS_ID) {
         throw new Error('400');
     }
 
