@@ -29,10 +29,12 @@ reimbsRouter.get('/:id', (request, response, next) => {
         if (!reimb) {
             response.sendStatus(404);
         } else {
+            console.log(reimb);
             response.json(reimb);
         }
         next();
     }).catch(err => {
+        console.log(err)
         response.sendStatus(500);
         next();
     })
@@ -41,6 +43,7 @@ reimbsRouter.get('/:id', (request, response, next) => {
 
 reimbsRouter.get('/user/:id', (request, response, next) => {
     const id = +request.params.id;
+    console.log(id);
     reimbsService.getReimbsByUserId(id).then(reimb => {
         if (!reimb[0]) {
             response.sendStatus(404);
@@ -49,11 +52,12 @@ reimbsRouter.get('/user/:id', (request, response, next) => {
         }
         next();
     }).catch(err => {
+        console.log(err);
         response.sendStatus(500);
         next();
     })
 });
-
+ 
 /*
     POST http://localhost:3000/reimbursements
     Creates a new reimbursement and saves them to the database.
@@ -64,10 +68,13 @@ reimbsRouter.post('', (request, response, next) => {
     const reimb = request.body;
     reimbsService.saveReimb(reimb)
         .then(newReimb => {
-            response.status(201);
+            console.log('attempting save output');
+            console.log(newReimb);
             response.json(newReimb);
+            response.status(201);
             next();
         }).catch(err => {
+            console.log(err)
             response.sendStatus(500);
             next();
         });
@@ -75,15 +82,19 @@ reimbsRouter.post('', (request, response, next) => {
 
 /* PATCH is an HTTP method that serves as partial replacement */
 reimbsRouter.patch('', (request, response, next) => {
+    console.log('routed');
     const reimb = request.body;
+    // const id = +request.params.id;
     reimbsService.patchReimb(reimb)
         .then(updatedReimb => {
             if (updatedReimb) {
+                console.log(updatedReimb)
                 response.json(updatedReimb);
             } else {
                 response.sendStatus(404);
             }
         }).catch(err => {
+            console.log(err)
             response.sendStatus(500);
         }).finally(() => {
             next();

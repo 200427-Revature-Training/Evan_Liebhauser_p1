@@ -26,6 +26,7 @@ usersRouter.get('', (request, response, next) => {
 */
 usersRouter.get('/:id', (request, response, next) => {
     const id = +request.params.id;
+    console.log(`${id}`)
     usersService.getUserById(id).then(user => {
         if (!user) {
             response.sendStatus(404);

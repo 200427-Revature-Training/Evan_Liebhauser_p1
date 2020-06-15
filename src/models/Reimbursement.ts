@@ -1,10 +1,10 @@
 export class Reimb {
     REIMB_ID: number;
     REIMB_AMOUNT: number;
-    REIMB_SUBMITTED: Date;
-    REIMB_RESOLVED: Date;
+    REIMB_SUBMITTED: string;
+    REIMB_RESOLVED: string;
     REIMB_DESCRIPTION: string;
-    REIMB_RECEIPT: Blob; //type likely to be changed by final release
+    REIMB_RECEIPT: string; //type likely to be changed by final release
     REIMB_AUTHOR: number;
     REIMB_RESOLVER: number;
     REIMB_STATUS_ID: number;
@@ -12,13 +12,13 @@ export class Reimb {
 
     static from(obj: ReimbRow): Reimb {
         const reimb = new Reimb(
-            obj.REIMB_ID, obj.REIMB_AMOUNT, obj.REIMB_SUBMITTED, obj.REIMB_RESOLVED, obj.REIMB_DESCRIPTION, obj.REIMB_RECEIPT, obj.REIMB_AUTHOR, obj. REIMB_RESOLVER, obj.REIMB_STATUS_ID, obj.REIMB_TYPE_ID
+            obj.REIMB_ID, obj.REIMB_AMOUNT, obj.REIMB_SUBMITTED, obj.REIMB_RESOLVED, obj.REIMB_DESCRIPTION, obj.REIMB_RECEIPT, obj.REIMB_AUTHOR, obj.REIMB_RESOLVER, obj.REIMB_STATUS_ID, obj.REIMB_TYPE_ID
         );
         return reimb
     }
 
     /*blob type of REIMB_RECEIPT likely to be changed by final release*/
-    constructor(REIMB_ID: number, REIMB_AMOUNT: number, REIMB_SUBMITTED: Date, REIMB_RESOLVED: Date, REIMB_DESCRIPTION: string, REIMB_RECEIPT: Blob, REIMB_AUTHOR: number, REIMB_RESOLVER: number, REIMB_STATUS_ID: number, REIMB_TYPE_ID: number) {
+    constructor(REIMB_ID: number, REIMB_AMOUNT: number, REIMB_SUBMITTED: string, REIMB_RESOLVED: string, REIMB_DESCRIPTION: string, REIMB_RECEIPT: string, REIMB_AUTHOR: number, REIMB_RESOLVER: number, REIMB_STATUS_ID: number, REIMB_TYPE_ID: number) {
         this.REIMB_ID = REIMB_ID;
         this.REIMB_AMOUNT = REIMB_AMOUNT;
         this.REIMB_SUBMITTED = REIMB_SUBMITTED;
@@ -35,10 +35,10 @@ export class Reimb {
 export interface ReimbRow {
     REIMB_ID: number;
     REIMB_AMOUNT: number;
-    REIMB_SUBMITTED: Date;
-    REIMB_RESOLVED: Date;
+    REIMB_SUBMITTED: string;
+    REIMB_RESOLVED: string;
     REIMB_DESCRIPTION: string;
-    REIMB_RECEIPT: Blob;
+    REIMB_RECEIPT: string;
     REIMB_AUTHOR: number;
     REIMB_RESOLVER: number;
     REIMB_STATUS_ID: number;

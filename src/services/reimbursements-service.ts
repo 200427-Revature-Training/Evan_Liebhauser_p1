@@ -19,21 +19,35 @@ export function getReimbsByUserId(id: number): Promise<Reimb[]> {
 
 
 export function saveReimb(reimb: any): Promise<Reimb> {
+    console.log('received data');
+    console.log(reimb);
 
     // Data from the user cannot be trusted
-    const newReimb = new Reimb(
-        reimb.REIMB_ID, reimb.REIMB_AMOUNT, reimb.REIMB_SUBMITTED, reimb.REIMB_RESOLVED, reimb.REIMB_DESCRIPTION, reimb.REIMB_RECEIPT, reimb.REIMB_AUTHOR, reimb. REIMB_RESOLVER, reimb.REIMB_STATUS_ID, reimb.REIMB_TYPE_ID
-       
-    );
 
+    const newReimb = new Reimb(
+        undefined,
+        reimb.REIMB_AMOUNT || 0,
+        new Date().toISOString(),
+        undefined,
+        reimb.REIMB_DESCRIPTION,
+        reimb.REIMB_RECEIPT,
+        reimb.REIMB_AUTHOR,
+        undefined,
+        1,
+        reimb.REIMB_TYPE_ID
+    );
+    
+    console.log('parsed reimb');
+    console.log(newReimb);
     // IF we're going validate it here, we probably want
     // constraints on the db too
 
-    if(reimb.amount && reimb.timeSubmitted && reimb.author && reimb.reimbStatus && reimb.reimbType) {
+    if(newReimb.REIMB_AMOUNT && newReimb.REIMB_SUBMITTED && newReimb.REIMB_AUTHOR && newReimb.REIMB_STATUS_ID && newReimb.REIMB_TYPE_ID) {
         // Data is valid - Continue submitting to DAO
         return reimbsDao.saveReimb(newReimb);
     } else {
         // TODO: We should fail here, probably issue some kind of 400
+        console.log(newReimb)
         return new Promise((resolve, reject) => reject(422));
     }
 }
@@ -46,7 +60,7 @@ export function patchReimb(input: any): Promise<Reimb> {
     const timeSubmitted = input.timeSubmitted && new Date(input.timeSubmitted);
 
     const reimb = new Reimb(
-        input.REIMB_ID, input.REIMB_AMOUNT, input.REIMB_SUBMITTED, input.REIMB_RESOLVED, input.REIMB_DESCRIPTION, input.REIMB_RECEIPT, input.REIMB_AUTHOR, input. REIMB_RESOLVER, input.REIMB_STATUS_ID, input.REIMB_TYPE_ID
+        input.REIMB_ID, input.REIMB_AMOUNT, input.REIMB_SUBMITTED || timeSubmitted, input.REIMB_RESOLVED, input.REIMB_DESCRIPTION, input.REIMB_RECEIPT, input.REIMB_AUTHOR, input. REIMB_RESOLVER, input.REIMB_STATUS_ID, input.REIMB_TYPE_ID
        
     );
 
